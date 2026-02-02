@@ -58,7 +58,69 @@
                 transform: translateY(2px);     /* 偏移 */
             }
 
-            /* 背景切换开关样式 */
+            /* 左侧视频按钮样式 */
+            .video-button {
+                position: fixed;
+                top: 50%;
+                left: 20px;
+                transform: translateY(-50%);
+                z-index: 10;
+                background-color: rgba(70, 198, 113, 0.4);
+                box-shadow: 0 3px 6px rgba(130, 137, 131, 0.7);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 10px 15px;
+                cursor: pointer;
+                font-size: 14px;
+                transition: all 0.3s ease;
+            }
+            
+            .video-button:hover {
+                background-color: rgba(23, 180, 232, 0.7);
+                transform: translateY(-50%) translateX(5px);
+            }
+            
+            /* 视频容器样式 */
+            .video-container {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 100;
+                background: rgba(0, 0, 0, 0.9);
+                padding: 20px;
+                border-radius: 10px;
+                display: none;
+            }
+            
+            .video-container.show {
+                display: block;
+            }
+            
+            .video-container video {
+                max-width: 90vw;
+                max-height: 80vh;
+                border-radius: 5px;
+            }
+            
+            /* 关闭按钮 */
+            .close-button {
+                position: absolute;
+                top: 10px;
+                right: 15px;
+                background: rgba(255, 255, 255, 0.8);
+                border: none;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+                font-size: 16px;
+                line-height: 30px;
+                text-align: center;
+            }
+        
+        /* 背景切换开关样式 */
             /* 修改原有.switch样式，添加flex布局 */
             .switch-container {
                 position: fixed;
@@ -406,6 +468,18 @@
     <!-- *************************************** 以上为CSS格式代码 *********************************************** -->
 </head>
 <body>
+    <!-- 左侧视频按钮 -->
+    <button class="video-button" id="videoButton">显示ZXM视频</button>
+    
+    <!-- 视频容器 -->
+    <div class="video-container" id="videoContainer">
+        <button class="close-button" id="closeButton">&times;</button>
+        <video controls>
+            <source src="https://example.com/zxm-video.mp4" type="video/mp4">
+            您的浏览器不支持视频播放。
+        </video>
+    </div>
+    
     <!-- 背景切换相关开关 -->
      <div class="switch-container">
         <div class="switch">
@@ -810,10 +884,35 @@
         // 添加保存按钮点击事件监听器
         saveButton.addEventListener('click', saveWallpaper);
 
+        // 视频控制逻辑
+        function setupVideoControl() {
+            const videoButton = document.getElementById('videoButton');
+            const videoContainer = document.getElementById('videoContainer');
+            const closeButton = document.getElementById('closeButton');
+            
+            // 点击显示视频
+            videoButton.addEventListener('click', function() {
+                videoContainer.classList.add('show');
+            });
+            
+            // 点击关闭视频
+            closeButton.addEventListener('click', function() {
+                videoContainer.classList.remove('show');
+            });
+            
+            // 点击视频容器外部关闭
+            videoContainer.addEventListener('click', function(e) {
+                if (e.target === videoContainer) {
+                    videoContainer.classList.remove('show');
+                }
+            });
+        }
+        
         // 启动应用
         window.addEventListener('DOMContentLoaded', bg_set); //背景设置
         window.addEventListener('DOMContentLoaded', HistorySet); //搜索历史补全设置
         window.addEventListener('DOMContentLoaded', init);
+        window.addEventListener('DOMContentLoaded', setupVideoControl); //视频控制
         
     </script>
 </body>
