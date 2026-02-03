@@ -15,8 +15,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
         
         body {
-            background: #1a1a1a;
-            color: #e0e0e0;
+            background: #f8f9fa;
+            color: #333333;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 16px;
             line-height: 1.6;
@@ -49,19 +49,19 @@
             font-size: 2rem;
             font-weight: 600;
             margin-bottom: 10px;
-            color: #ffffff;
+            color: #333333;
         }
         
         .tagline {
             font-size: 1rem;
-            color: #888888;
+            color: #666666;
             margin-bottom: 30px;
             font-weight: 300;
         }
         
         .description {
             font-size: 1rem;
-            color: #b0b0b0;
+            color: #555555;
             margin-bottom: 40px;
             line-height: 1.8;
             max-width: 500px;
@@ -77,23 +77,25 @@
         }
         
         .link-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             padding: 15px 20px;
             text-decoration: none;
-            color: #e0e0e0;
+            color: #333333;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
         .link-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .link-icon {
@@ -115,11 +117,11 @@
         
         .bookmarks-toggle {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             padding: 15px 20px;
-            color: #e0e0e0;
+            color: #333333;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -127,11 +129,13 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
         .bookmarks-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 1);
+            border-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
         .bookmarks-content {
@@ -152,10 +156,11 @@
         }
         
         .bookmark-category {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.08);
             border-radius: 10px;
             padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
         
         .bookmark-category h3 {
@@ -172,7 +177,7 @@
         }
         
         .bookmark-link {
-            color: #b0b0b0;
+            color: #555555;
             text-decoration: none;
             padding: 6px 0;
             font-size: 0.9rem;
@@ -181,7 +186,7 @@
         }
         
         .bookmark-link:hover {
-            color: #ffffff;
+            color: #333333;
             transform: translateX(5px);
         }
         
@@ -275,7 +280,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.6);
         display: none;
         align-items: center;
         justify-content: center;
@@ -283,28 +288,29 @@
         padding: 20px;
     ">
         <div style="
-            background: #1a1a1a;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 16px;
             padding: 40px;
             max-width: 600px;
             width: 100%;
             max-height: 80vh;
             overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         ">
             <div style="text-align: center; margin-bottom: 30px;">
                 <div style="font-size: 3rem; margin-bottom: 15px;">👤</div>
-                <h2 style="font-size: 1.8rem; font-weight: 600; color: #ffffff; margin-bottom: 10px;">关于我</h2>
-                <p style="color: #888888;">WangLi</p>
+                <h2 style="font-size: 1.8rem; font-weight: 600; color: #333333; margin-bottom: 10px;">关于我</h2>
+                <p style="color: #666666;">WangLi</p>
             </div>
             
-            <div style="text-align: left; line-height: 1.8; color: #b0b0b0;">
+            <div style="text-align: left; line-height: 1.8; color: #555555;">
                 <p style="margin-bottom: 20px;">
                     你好！我是WangLi，一名热爱编程和设计的学生。我热衷于将所学到的知识、灵感付诸实践，
                     并享受创造过程中的乐趣。
                 </p>
                 
-                <h3 style="color: #ffffff; margin: 25px 0 15px; font-size: 1.2rem;">兴趣爱好</h3>
+                <h3 style="color: #333333; margin: 25px 0 15px; font-size: 1.2rem;">兴趣爱好</h3>
                 <ul style="list-style: none; padding-left: 0;">
                     <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
                         <span>💻</span> 编程开发
@@ -320,7 +326,7 @@
                     </li>
                 </ul>
                 
-                <h3 style="color: #ffffff; margin: 25px 0 15px; font-size: 1.2rem;">技术栈</h3>
+                <h3 style="color: #333333; margin: 25px 0 15px; font-size: 1.2rem;">技术栈</h3>
                 <ul style="list-style: none; padding-left: 0;">
                     <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
                         <span>🌐</span> HTML/CSS/JavaScript
@@ -340,14 +346,15 @@
             <button id="close-modal" style="
                 margin-top: 30px;
                 width: 100%;
-                background: rgba(255, 255, 255, 0.05);
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.1);
                 border-radius: 10px;
                 padding: 12px;
-                color: #e0e0e0;
+                color: #333333;
                 font-weight: 500;
                 cursor: pointer;
                 transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
             ">
                 关闭
             </button>
