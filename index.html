@@ -23,15 +23,123 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            padding: 40px 20px 40px 80px;
+            transition: all 0.3s ease;
+        }
+        
+        body.sidebar-open {
+            padding-left: 280px;
+        }
+        
+        /* 侧边栏样式 */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
+            padding: 20px 0;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar.open {
+            width: 260px;
+        }
+        
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333333;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        
+        .sidebar-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar-menu {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            width: 90%;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333333;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar.open .sidebar-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .sidebar-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .sidebar-item.active {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+        
+        .sidebar-icon {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .sidebar-text {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .sidebar-footer {
+            margin-top: auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #666666;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar.open .sidebar-footer {
+            opacity: 1;
         }
         
         .container {
             max-width: 600px;
             width: 100%;
             text-align: center;
+            margin: 0 auto;
         }
         
         .avatar {
@@ -197,7 +305,15 @@
         
         @media (max-width: 768px) {
             body {
-                padding: 20px 15px;
+                padding: 20px 15px 20px 70px;
+            }
+            
+            body.sidebar-open {
+                padding-left: 20px;
+            }
+            
+            .sidebar.open {
+                width: 240px;
             }
             
             .avatar {
@@ -216,9 +332,58 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 20px 10px 20px 60px;
+            }
+            
+            .sidebar {
+                width: 50px;
+            }
+            
+            .sidebar.open {
+                width: 200px;
+            }
+            
+            .sidebar-toggle {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 侧边栏 -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-toggle" id="sidebar-toggle">☰</button>
+        <div class="sidebar-menu">
+            <a href="#" class="sidebar-item active" data-section="home">
+                <span class="sidebar-icon">🏠</span>
+                <span class="sidebar-text">首页</span>
+            </a>
+            <a href="#" class="sidebar-item" data-section="about">
+                <span class="sidebar-icon">👤</span>
+                <span class="sidebar-text">关于我</span>
+            </a>
+            <a href="#" class="sidebar-item" data-section="bookmarks">
+                <span class="sidebar-icon">📑</span>
+                <span class="sidebar-text">书签收藏</span>
+            </a>
+            <a href="#" class="sidebar-item" data-section="links">
+                <span class="sidebar-icon">🔗</span>
+                <span class="sidebar-text">常用链接</span>
+            </a>
+            <a href="#" class="sidebar-item" data-section="settings">
+                <span class="sidebar-icon">⚙️</span>
+                <span class="sidebar-text">设置</span>
+            </a>
+        </div>
+        <div class="sidebar-footer">
+            <p>WangLi</p>
+            <p>Just for fun</p>
+        </div>
+    </div>
+    
     <div class="container">
         <div class="avatar">🏠</div>
         <h1 class="name">WangLi</h1>
@@ -455,9 +620,66 @@
             }
         });
         
+        // 侧边栏功能
+        function initSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const body = document.body;
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            
+            // 侧边栏展开/收起
+            sidebarToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                body.classList.toggle('sidebar-open');
+            });
+            
+            // 侧边栏项目点击事件
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    // 更新激活状态
+                    sidebarItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 处理不同部分的显示
+                    switch(section) {
+                        case 'home':
+                            // 滚动到顶部
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            break;
+                        case 'about':
+                            // 打开关于我模态框
+                            document.getElementById('about-link').click();
+                            break;
+                        case 'bookmarks':
+                            // 展开书签
+                            const bookmarksContent = document.getElementById('bookmarks-content');
+                            const bookmarksToggle = document.getElementById('bookmarks-toggle');
+                            if (!bookmarksContent.classList.contains('expanded')) {
+                                bookmarksToggle.click();
+                            }
+                            // 滚动到书签部分
+                            document.getElementById('bookmarks-container').scrollIntoView({ behavior: 'smooth' });
+                            break;
+                        case 'links':
+                            // 滚动到常用链接部分
+                            document.querySelector('.links').scrollIntoView({ behavior: 'smooth' });
+                            break;
+                        case 'settings':
+                            // 可以添加设置功能
+                            alert('设置功能开发中...');
+                            break;
+                    }
+                });
+            });
+        }
+        
         // 初始化
         window.addEventListener('DOMContentLoaded', function() {
             loadBookmarks();
+            initSidebar();
         });
     </script>
 </body>
