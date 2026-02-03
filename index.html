@@ -420,19 +420,6 @@
             </a>
         </div>
         
-        <!-- 书签部分 -->
-        <div class="bookmarks-section">
-            <button class="bookmarks-toggle" id="bookmarks-toggle">
-                <span class="link-icon">📑</span>
-                书签收藏
-            </button>
-            <div class="bookmarks-content" id="bookmarks-content">
-                <div class="bookmarks-grid" id="bookmarks-grid">
-                    <!-- 书签内容将通过JS动态生成 -->
-                </div>
-            </div>
-        </div>
-        
         <footer class="footer">
             © 2025 WangLi. Made with ❤️
         </footer>
@@ -464,7 +451,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         ">
             <div style="text-align: center; margin-bottom: 30px;">
-                <div style="font-size: 3rem; margin-bottom: 15px;">👤</div>
+                <div style="font-size: 3rem; margin-bottom: 15px;">�</div>
                 <h2 style="font-size: 1.8rem; font-weight: 600; color: #333333; margin-bottom: 10px;">关于我</h2>
                 <p style="color: #666666;">WangLi</p>
             </div>
@@ -500,15 +487,71 @@
                         <span>⚡</span> 前端框架
                     </li>
                     <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                        <span>🚀</span> 后端开发
+                        <span>�</span> 后端开发
                     </li>
                     <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
-                        <span>🖥️</span> 其他技术
+                        <span>�️</span> 其他技术
                     </li>
                 </ul>
             </div>
             
             <button id="close-modal" style="
+                margin-top: 30px;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                padding: 12px;
+                color: #333333;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            ">
+                关闭
+            </button>
+        </div>
+    </div>
+    
+    <!-- 书签模态框 -->
+    <div id="bookmarks-modal" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        padding: 20px;
+    ">
+        <div style="
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        ">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 2rem; margin-bottom: 15px;">📑</div>
+                <h2 style="font-size: 1.5rem; font-weight: 600; color: #333333; margin-bottom: 10px;">书签收藏</h2>
+            </div>
+            
+            <div id="bookmarks-modal-content" style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            ">
+                <!-- 书签内容将通过JS动态生成 -->
+            </div>
+            
+            <button id="close-bookmarks-modal" style="
                 margin-top: 30px;
                 width: 100%;
                 background: rgba(255, 255, 255, 0.8);
@@ -568,23 +611,46 @@
             }
         ];
         
-        // 加载书签
+        // 加载书签到模态框
         function loadBookmarks() {
-            const container = document.getElementById('bookmarks-grid');
+            const container = document.getElementById('bookmarks-modal-content');
             container.innerHTML = '';
             
             bookmarksData.forEach(category => {
                 const categoryDiv = document.createElement('div');
-                categoryDiv.className = 'bookmark-category';
+                categoryDiv.style.cssText = `
+                    background: rgba(255, 255, 255, 0.8);
+                    border: 1px solid rgba(0, 0, 0, 0.08);
+                    border-radius: 10px;
+                    padding: 15px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                `;
                 
                 let linksHtml = '';
                 category.links.forEach(link => {
-                    linksHtml += `<a href="${link.url}" class="bookmark-link" target="_blank">${link.title}</a>`;
+                    linksHtml += `<a href="${link.url}" target="_blank" style="
+                        color: #555555;
+                        text-decoration: none;
+                        padding: 6px 0;
+                        font-size: 0.9rem;
+                        display: block;
+                        transition: all 0.2s ease;
+                        text-align: left;
+                    ">${link.title}</a>`;
                 });
                 
                 categoryDiv.innerHTML = `
-                    <h3>${category.name}</h3>
-                    <div class="bookmark-links">
+                    <h3 style="
+                        color: #4CAF50;
+                        margin-bottom: 10px;
+                        font-size: 1rem;
+                        font-weight: 600;
+                    ">${category.name}</h3>
+                    <div style="
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+                    ">
                         ${linksHtml}
                     </div>
                 `;
@@ -593,11 +659,23 @@
             });
         }
         
-        // 书签展开/收起
-        document.getElementById('bookmarks-toggle').addEventListener('click', function() {
-            const content = document.getElementById('bookmarks-content');
-            content.classList.toggle('expanded');
-        });
+        // 书签模态框功能
+        function initBookmarksModal() {
+            const bookmarksModal = document.getElementById('bookmarks-modal');
+            const closeBookmarksModal = document.getElementById('close-bookmarks-modal');
+            
+            // 关闭模态框
+            closeBookmarksModal.addEventListener('click', function() {
+                bookmarksModal.style.display = 'none';
+            });
+            
+            // 点击模态框外部关闭
+            bookmarksModal.addEventListener('click', function(e) {
+                if (e.target === bookmarksModal) {
+                    bookmarksModal.style.display = 'none';
+                }
+            });
+        }
         
         // 个人介绍模态框
         const aboutModal = document.getElementById('about-modal');
@@ -654,14 +732,8 @@
                             document.getElementById('about-link').click();
                             break;
                         case 'bookmarks':
-                            // 展开书签
-                            const bookmarksContent = document.getElementById('bookmarks-content');
-                            const bookmarksToggle = document.getElementById('bookmarks-toggle');
-                            if (!bookmarksContent.classList.contains('expanded')) {
-                                bookmarksToggle.click();
-                            }
-                            // 滚动到书签部分
-                            document.getElementById('bookmarks-container').scrollIntoView({ behavior: 'smooth' });
+                            // 打开书签模态框
+                            document.getElementById('bookmarks-modal').style.display = 'flex';
                             break;
                         case 'links':
                             // 滚动到常用链接部分
@@ -680,6 +752,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             loadBookmarks();
             initSidebar();
+            initBookmarksModal();
         });
     </script>
 </body>
