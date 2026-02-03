@@ -58,9 +58,7 @@
                 transform: translateY(2px);     /* 偏移 */
             }
 
-
-        
-        /* 背景切换开关样式 */
+            /* 背景切换开关样式 */
             /* 修改原有.switch样式，添加flex布局 */
             .switch-container {
                 position: fixed;
@@ -457,7 +455,7 @@
     <div id="bookmarks-container" class="bookmarks"></div>
     <div id="error-message" class="error-message"></div>
     <!-- 四、底部通知与信息 -->
-    <div class="bottom-info"> Designed by WangLi | 2026.2.2 V1.0 </div>
+    <div class="bottom-info"> Designed by GeorgeHua | 2025.06.20 V4.1 </div>
     <div id="notification" class="notification">
         选择路径保存壁纸
     </div>
@@ -657,19 +655,18 @@
             toggle1.checked = isDynamicBg;
             toggle2.checked = isPureBg;
 
+
             // 内嵌函数：生成随机图片ID（1-1000之间的图片）
             function generateImageId() {
                 return Math.floor(Math.random() * 1000) + 1;
             }
-            
             // 内嵌函数：设置背景
             function applyBackground(imageId) {
                 if(imageId==2000 || bgPure==='pure'){       //toggle2打开状态
                     // body.style.backgroundColor = '#f0f2f5';
                     body.style.background= `url(https://bing.biturl.top/?format=image&index=0) no-repeat center center fixed`;
                 }else{
-                    // 使用zxm.png作为背景
-                    body.style.background = `url(zxm.png) no-repeat center center fixed`;
+                    body.style.background = `url(https://picsum.photos/id/${imageId}/1920/1080) no-repeat center center fixed`;
                     body.style.backgroundSize = 'cover';
                 }
             } 
@@ -817,7 +814,6 @@
         window.addEventListener('DOMContentLoaded', bg_set); //背景设置
         window.addEventListener('DOMContentLoaded', HistorySet); //搜索历史补全设置
         window.addEventListener('DOMContentLoaded', init);
-
         
     </script>
 </body>
